@@ -12,17 +12,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Camera _playerCamera;
     [SerializeField] InputActionReference _moveInput;
     [SerializeField] InputActionReference _runInput;
-    [SerializeField] InputActionReference _jumpInput;
+    [SerializeField] InputActionReference _crawlInput;
     [SerializeField] InputActionReference _useInput;
     [SerializeField] InputActionReference _exitInput;
-    [SerializeField] Animator _animator;
-    [SerializeField] Vector3 _jumpForce;
-    [SerializeField] float _speed;
-    [SerializeField] float _runSpeed;
+   /* [SerializeField] Animator _animator;*/
+    [SerializeField] public float _speed;
+    [SerializeField] public float _runSpeed;
     [SerializeField] float _rotationSpeed;
     bool _isMoving;
     bool _isRunning;
-    bool _isJumping;
+    bool _isCrawling;
     Vector3 _playerMovement;
     Vector3 _calculatedDirection;
     void Start()
@@ -34,8 +33,8 @@ public class PlayerMovement : MonoBehaviour
         _runInput.action.started += StartRun;
         _runInput.action.canceled += EndRun;
 
-        _jumpInput.action.started += StartJump;
-        _jumpInput.action.canceled += EndJump;
+        _crawlInput.action.started += StartCrawl;
+        _crawlInput.action.canceled += EndCrawl;
 
         _useInput.action.started += StartUse;
         _useInput.action.canceled += EndUse;
@@ -52,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
         _runInput.action.started -= StartRun;
         _runInput.action.canceled -= EndRun;
 
-        _jumpInput.action.started -= StartJump;
-        _jumpInput.action.canceled -= EndJump;
+        _crawlInput.action.started -= StartCrawl;
+        _crawlInput.action.canceled -= EndCrawl;
 
         _useInput.action.started += StartUse;
         _useInput.action.canceled += EndUse;
@@ -85,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("MOVE");
         _playerMovement = obj.ReadValue<Vector3>();
         _isMoving = true;
-        _animator.SetBool("Standard Walk", true);
+        /*_animator.SetBool("Standard Walk", true);*/
     }
 
     private void EndMove(InputAction.CallbackContext obj)
@@ -93,33 +92,32 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("don't move");
         _playerMovement = Vector3.zero;
         _isMoving = false;
-        _animator.SetBool("Standard Walk", false);
+        /*_animator.SetBool("Standard Walk", false);*/
     }
 
     private void StartRun(InputAction.CallbackContext obj)
     {
         Debug.Log("RUN");
         _isRunning = true;
-        _animator.SetBool("Running", true);     
+       /* _animator.SetBool("Running", true);  */   
     }
     private void EndRun(InputAction.CallbackContext obj)
     {
         Debug.Log("StopRUN");
         _isRunning = false;
-        _animator.SetBool("Running", false);
-       
+       /* _animator.SetBool("Running", false); */     
     }
 
-    private void StartJump(InputAction.CallbackContext obj)
+    private void StartCrawl(InputAction.CallbackContext obj)
     {
-        Debug.Log("JUMP");
-        _isJumping = true;
+        Debug.Log("Crawl");
+        _isCrawling = true;
     }
 
-    private void EndJump(InputAction.CallbackContext obj)
+    private void EndCrawl(InputAction.CallbackContext obj)
     {
-        Debug.Log("GROUND");
-        _isJumping = false;
+        Debug.Log("StandUp");
+        _isCrawling = false;
     }
 
     private void StartUse(InputAction.CallbackContext obj)

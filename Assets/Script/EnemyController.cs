@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float _lookRadius;
     [SerializeField] Transform _target;
     [SerializeField] NavMeshAgent _agent;
-    [SerializeField] Animator _animator;
+   /* [SerializeField] Animator _animator;*/
     void Start()
     {
         _target = PlayerManager.instance.player.transform;
@@ -24,21 +24,21 @@ public class EnemyController : MonoBehaviour
         if(distance <= _lookRadius)
         {
             _agent.SetDestination(_target.position);
-            _animator.SetBool("Running Crawl", true);
-
+            /*_animator.SetBool("Running Crawl", true);
+*/
             if(distance <= _agent.stoppingDistance)
             {
                 //enemy attack
                 FaceTarget();
             }
         }
-        else
+       /* else
         {
             _animator.SetBool("Running Crawl", false);
-        }       
+        }    */   
     }
 
-    private void OnTriggerEnter(Collider collider)
+   /* private void OnTriggerEnter(Collider collider)
     {
         if(collider.gameObject.tag == "PlayerTag")
         {
@@ -65,7 +65,7 @@ public class EnemyController : MonoBehaviour
         {
             _animator = null;
         }
-    }
+    }*/
 
     void FaceTarget()
     {

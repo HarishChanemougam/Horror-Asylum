@@ -1235,7 +1235,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: f4f7ba03d84b6d547b8b13c57b2ed35d,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: f4f7ba03d84b6d547b8b13c57b2ed35d,
         type: 3}
@@ -1250,7 +1250,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: f4f7ba03d84b6d547b8b13c57b2ed35d,
         type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4f7ba03d84b6d547b8b13c57b2ed35d, type: 3}
@@ -1473,7 +1473,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -2.0809632e-10, y: 0.9984386, z: -0.055860423, w: -0.000000003719474}
+  m_LocalRotation: {x: 2.0809632e-10, y: 0.9984386, z: -0.055860423, w: 0.000000003719474}
   m_LocalPosition: {x: 0, y: 1.59, z: -6.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3216,13 +3216,12 @@ MonoBehaviour:
     type: 3}
   _runInput: {fileID: 2006366390718550695, guid: 5d194361902aff943817ac4c72f2da2d,
     type: 3}
-  _jumpInput: {fileID: -3171986955778823380, guid: 5d194361902aff943817ac4c72f2da2d,
+  _crawlInput: {fileID: -3171986955778823380, guid: 5d194361902aff943817ac4c72f2da2d,
     type: 3}
   _useInput: {fileID: 3651498367341204498, guid: 5d194361902aff943817ac4c72f2da2d,
     type: 3}
-  _exitInput: {fileID: 0}
-  _animator: {fileID: 797481965}
-  _jumpForce: {x: 0, y: 0, z: 0}
+  _exitInput: {fileID: 1298559323273382728, guid: 5d194361902aff943817ac4c72f2da2d,
+    type: 3}
   _speed: 3
   _runSpeed: 5
   _rotationSpeed: 10
@@ -3269,6 +3268,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4841a3d4d0c87e4d8cf2674e3fe3f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &797481969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797481964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09fa5de3ebded654d948096eb0929141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 797481965}
+  _movement: {fileID: 797481966}
 --- !u!1 &817409312
 GameObject:
   m_ObjectHideFlags: 0
@@ -3632,6 +3645,7 @@ GameObject:
   - component: {fileID: 893823268}
   - component: {fileID: 893823270}
   - component: {fileID: 893823269}
+  - component: {fileID: 893823271}
   m_Layer: 0
   m_Name: ZombieGirl
   m_TagString: Untagged
@@ -3722,7 +3736,6 @@ MonoBehaviour:
   _lookRadius: 3
   _target: {fileID: 1400889622}
   _agent: {fileID: 893823266}
-  _animator: {fileID: 1261510451}
 --- !u!114 &893823269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3748,6 +3761,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 3
+--- !u!114 &893823271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893823263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f6d8f672f91f946a5c74685f0ba0bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1261510451}
+  _agent: {fileID: 893823266}
 --- !u!114 &893869276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4757,7 +4784,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1233050204}
-  m_LocalRotation: {x: -0.0000000030443095, y: 0.9877969, z: -0.15574773, w: -0.000000019307885}
+  m_LocalRotation: {x: -0, y: 0.9877969, z: -0.15574771, w: -1e-45}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4973,6 +5000,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 8828f5ae22fc3ef4a9a838c06d179075, type: 2}
+    - target: {fileID: 5866666021909216657, guid: c77640029da58f44780bd456358f32dc,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c77640029da58f44780bd456358f32dc, type: 3}
 --- !u!4 &1261510450 stripped
@@ -5909,7 +5941,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626615175}
-  m_LocalRotation: {x: 2.5006497e-10, y: 0.99518037, z: -0.09806145, w: 0.000000002537794}
+  m_LocalRotation: {x: -0.0000000010223924, y: 0.99518037, z: -0.09806146, w: -0.000000010375788}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6842,7 +6874,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899350087}
-  m_LocalRotation: {x: -0, y: 0.9984386, z: -0.055860434, w: -1e-45}
+  m_LocalRotation: {x: -0, y: 0.9984386, z: -0.055860434, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

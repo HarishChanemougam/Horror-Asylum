@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Jump",
+                    "name": "Crawl",
                     "type": "Button",
                     "id": "febee838-c652-406d-b43f-3f3fd532b962",
                     "expectedControlType": "Button",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "GrabAndUse",
+                    "name": "Use",
                     "type": "Button",
                     "id": "d020c327-019a-42ed-8a5f-cf0a5d53f514",
                     "expectedControlType": "Button",
@@ -59,7 +59,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
+                    "action": "Crawl",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -81,7 +81,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "GrabAndUse",
+                    "action": "Use",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
