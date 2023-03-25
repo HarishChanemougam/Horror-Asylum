@@ -1,6 +1,5 @@
 using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using Unity.VisualScripting;
@@ -63,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
   
     void Update()
     {
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         Vector3 CalculatedDirection = _playerMovement * Time.deltaTime * _speed;
         if (_isRunning)
         {
