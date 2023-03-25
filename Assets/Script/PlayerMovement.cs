@@ -3,21 +3,26 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using Unity.VisualScripting;
+using System;
+using TMPro;
 
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerMovement : MonoBehaviour
 {
+    public LayerMask _movementMask;
+    public Interactable _Focus;
+    [SerializeField] PlayerMotor _motor;
     [SerializeField] CharacterController _characterController;
     [SerializeField] Camera _playerCamera;
     [SerializeField] InputActionReference _moveInput;
     [SerializeField] InputActionReference _runInput;
     [SerializeField] InputActionReference _crawlInput;
-    [SerializeField] InputActionReference _useInput;
-    [SerializeField] InputActionReference _exitInput;
-   /* [SerializeField] Animator _animator;*/
     [SerializeField] public float _speed;
     [SerializeField] public float _runSpeed;
-    [SerializeField] float _rotationSpeed;
+    [SerializeField] public float _rotationSpeed;
+    [SerializeField] public float _stoppingDistance;
+
+    public bool updateRotation;
     bool _isMoving;
     bool _isRunning;
     bool _isCrawling;
@@ -25,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     Vector3 _calculatedDirection;
     void Start()
     {
+        _playerCamera = Camera.main;
+        _motor = GetComponent<PlayerMotor>();
+
         _moveInput.action.started += StartMove;
         _moveInput.action.performed += StartMove;
         _moveInput.action.canceled += EndMove;
@@ -34,12 +42,6 @@ public class PlayerMovement : MonoBehaviour
 
         _crawlInput.action.started += StartCrawl;
         _crawlInput.action.canceled += EndCrawl;
-
-        _useInput.action.started += StartUse;
-        _useInput.action.canceled += EndUse;
-
-        _useInput.action.started += StartExit;
-        _useInput.action.canceled += EndExit;
     }
     private void OnDestroy()
     {
@@ -52,17 +54,40 @@ public class PlayerMovement : MonoBehaviour
 
         _crawlInput.action.started -= StartCrawl;
         _crawlInput.action.canceled -= EndCrawl;
-
-        _useInput.action.started += StartUse;
-        _useInput.action.canceled += EndUse;
-
-        _useInput.action.started += StartExit;
-        _useInput.action.canceled += EndExit;
     }
   
     void Update()
     {
-        if(EventSystem.current.IsPointerOverGameObject())
+        if(Input.GetMouseButtonDown(0))
+        {
+            Ray ray = _playerCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if(Physics.Raycast(ray, out hit, 100, _movementMask))
+            {
+                Debug.Log("We Hit" + hit.collider.name + "" + hit.point);
+                //Move oru player to what we hit
+                RemoveFocus();
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = _playerCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+
+                 if(interactable != null)
+                {
+                    SetFocus(interactable);
+                }
+            }
+        }
+
+        if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
@@ -83,33 +108,49 @@ public class PlayerMovement : MonoBehaviour
         _characterController.transform.rotation = Quaternion.Euler(0, Value, 0);
       
     }
+
+    void SetFocus(Interactable newFocus)
+    {
+        if (newFocus != _Focus)
+        {
+            if(newFocus != null)
+            {
+                _Focus.OnDefocused();
+            }
+            _Focus = newFocus;
+            _motor.FollowTarget(newFocus);
+        }
+        newFocus.OnFocused(transform);
+    }
+
+    void RemoveFocus()
+    {
+        if(_Focus != null)
+        {
+            _Focus.OnDefocused();
+        }
+        _Focus = null;
+        _motor.StopFollowingTarget();
+    }
     private void StartMove(InputAction.CallbackContext obj)
     {
-        Debug.Log("MOVE");
         _playerMovement = obj.ReadValue<Vector3>();
         _isMoving = true;
-        /*_animator.SetBool("Standard Walk", true);*/
     }
 
     private void EndMove(InputAction.CallbackContext obj)
     {
-        Debug.Log("don't move");
         _playerMovement = Vector3.zero;
         _isMoving = false;
-        /*_animator.SetBool("Standard Walk", false);*/
     }
 
     private void StartRun(InputAction.CallbackContext obj)
     {
-        Debug.Log("RUN");
         _isRunning = true;
-       /* _animator.SetBool("Running", true);  */   
     }
     private void EndRun(InputAction.CallbackContext obj)
     {
-        Debug.Log("StopRUN");
         _isRunning = false;
-       /* _animator.SetBool("Running", false); */     
     }
 
     private void StartCrawl(InputAction.CallbackContext obj)
@@ -124,23 +165,8 @@ public class PlayerMovement : MonoBehaviour
         _isCrawling = false;
     }
 
-    private void StartUse(InputAction.CallbackContext obj)
+    internal void SetDestination(Vector3 point)
     {
-        Debug.Log("USE");
-    }
-
-    private void EndUse(InputAction.CallbackContext obj)
-    {
-        Debug.Log("Don't");
-    }
-
-    private void StartExit(InputAction.CallbackContext obj)
-    {
-        Debug.Log("Exit");
-    }
-
-    private void EndExit(InputAction.CallbackContext obj)
-    {
-        Debug.Log("EXit");
+        throw new NotImplementedException();
     }
 }

@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    [SerializeField] float _radius;
-    [SerializeField] Transform _interactionTransform;
+    [SerializeField] public float _radius;
 
+    public Transform _interactionTransform;
     bool _isFocus = false;
     Transform _player;
     bool _hasInteracted = false;
 
     public virtual void Interact()
     {
+        //This method is meant to be overwritten
         Debug.Log("Interating with" + transform.name);
     }
 
@@ -35,6 +36,13 @@ public class Interactable : MonoBehaviour
         _hasInteracted = false;
     }
 
+    public void OnDefocused()
+    {
+        _isFocus = false;
+        _player = null;
+        _hasInteracted = false;
+    }
+
     private void OnDrawGizmosSelected()
     {
         if(_interactionTransform == null)
@@ -43,6 +51,6 @@ public class Interactable : MonoBehaviour
         }
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _radius);
+        Gizmos.DrawWireSphere(_interactionTransform.position, _radius);
     }
 }
