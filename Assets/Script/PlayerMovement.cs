@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public LayerMask _movementMask;
     public Interactable _Focus;
+    public int _level;
     [SerializeField] PlayerMotor _motor;
     [SerializeField] CharacterController _characterController;
     [SerializeField] Camera _playerCamera;
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] InputActionReference _runInput;
     [SerializeField] InputActionReference _crawlInput;
     [SerializeField] public float _speed;
+    [SerializeField] public int _health;
     [SerializeField] public float _runSpeed;
     [SerializeField] public float _rotationSpeed;
     [SerializeField] public float _stoppingDistance;
@@ -106,7 +108,6 @@ public class PlayerMovement : MonoBehaviour
         float currentYAxis = _characterController.transform.localEulerAngles.y;
         float Value = Mathf.LerpAngle(currentYAxis, YAxis, Time.deltaTime * _rotationSpeed);
         _characterController.transform.rotation = Quaternion.Euler(0, Value, 0);
-      
     }
 
     void SetFocus(Interactable newFocus)
@@ -168,5 +169,24 @@ public class PlayerMovement : MonoBehaviour
     internal void SetDestination(Vector3 point)
     {
         throw new NotImplementedException();
+    }
+
+    public void SavePlayer()
+    {
+        SaveSystem.SavePlayer(this);
+    }
+
+    public void LoadPlayer()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        _level = data._level;
+        _health = data._health;
+
+        Vector3 position;
+        position.x = data._position[0];
+        position.y = data._position[1];
+        position.z = data._position[2];
+        transform.position = position;
     }
 }
