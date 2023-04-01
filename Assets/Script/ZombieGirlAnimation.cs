@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class ZombieGirlAnimation : MonoBehaviour
 {
-    const float locomotionAnimationShoothTime = 0.1f;
+    const float locomotionAnimationSmoothTime = 0.1f;
     [SerializeField] Animator _animator;
     [SerializeField] NavMeshAgent _agent;
 
@@ -19,6 +19,6 @@ public class ZombieGirlAnimation : MonoBehaviour
     private void Update()
     {
         float ZombieGirlAnimator = _agent.velocity.magnitude / _agent.speed;
-        _animator.SetFloat("ZombieGirlAnimator", ZombieGirlAnimator, locomotionAnimationShoothTime, Time.deltaTime);
+        _animator.SetFloat("ZombieGirlAnimator", ZombieGirlAnimator, locomotionAnimationSmoothTime, Time.deltaTime);
     }
 }
